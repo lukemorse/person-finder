@@ -5,6 +5,8 @@ import '../person_card.dart';
 
 class PersonSearchDelegate extends SearchDelegate {
   @override
+  String get searchFieldLabel => 'Search in Air HQ';
+  @override
   List<Widget>? buildActions(BuildContext context) {
     return <Widget>[
       if (query.isEmpty)
@@ -33,7 +35,10 @@ class PersonSearchDelegate extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     final list = testData
-        .where((element) => element['name'].toString().contains(query))
+        .where((element) => element['name']
+            .toString()
+            .toLowerCase()
+            .contains(query.toLowerCase()))
         .toList();
     return ListView.builder(
       itemCount: list.length,
@@ -49,7 +54,10 @@ class PersonSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final list = testData
-        .where((element) => element['name'].toString().contains(query))
+        .where((element) => element['name']
+            .toString()
+            .toLowerCase()
+            .contains(query.toLowerCase()))
         .toList();
     return ListView.builder(
       itemCount: list.length,
