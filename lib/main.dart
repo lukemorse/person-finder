@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:person_finder/data.dart';
@@ -31,46 +32,79 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    for (var element in testData) {
+      precacheImage(
+          NetworkImage(
+            element['avatar'].toString(),
+          ),
+          context);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 100),
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'The Person Finder',
-                    style: Theme.of(context).textTheme.headline2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(100, 50, 0, 0),
+                    child: Image.asset('assets/Union.png'),
                   ),
-                ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text(
-                  'If you just can’t find someone and need to know what they look like, you’ve come to the right place! Just type the name of the person you are looking for below into the search box!',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 30),
-                child: CupertinoSearchTextField(
-                  onTap: () => showSearch(
-                      context: context, delegate: PersonSearchDelegate()),
-                ),
-              ),
-              ListView.builder(
-                // itemCount: testData.length,
-                itemCount: 10,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => PersonCard(
-                  name: testData[index]['name'].toString(),
-                  imageUrl: testData[index]['avatar'].toString(),
-                  description: testData[index]['description'].toString(),
+              FractionallySizedBox(
+                widthFactor: 0.5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 50),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'The Person Finder',
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        'If you just can’t find someone and need to know what they look like, you’ve come to the right place! Just type the name of the person you are looking for below into the search box!',
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: CupertinoSearchTextField(
+                        placeholder: 'Search in Air HQ',
+                        onTap: () => showSearch(
+                            context: context, delegate: PersonSearchDelegate()),
+                      ),
+                    ),
+                    ListView.builder(
+                      // itemCount: testData.length,
+                      itemCount: 10,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => PersonCard(
+                        name: testData[index]['name'].toString(),
+                        imageUrl: testData[index]['avatar'].toString(),
+                        description: testData[index]['description'].toString(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
