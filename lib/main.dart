@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:person_finder/data.dart';
+import 'package:person_finder/person_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,15 +21,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -74,11 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 // itemCount: testData.length,
                 itemCount: 10,
                 shrinkWrap: true,
-                itemBuilder: (context, index) => card(
-                    context,
-                    testData[index]['name'].toString(),
-                    testData[index]['avatar'].toString(),
-                    testData[index]['description'].toString()),
+                itemBuilder: (context, index) => PersonCard(
+                  name: testData[index]['name'].toString(),
+                  imageUrl: testData[index]['avatar'].toString(),
+                  description: testData[index]['description'].toString(),
+                ),
               ),
             ],
           ),
@@ -86,29 +77,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
-
-Widget card(
-    BuildContext context, String name, String imageUrl, String description) {
-  return ListTile(
-    leading: CachedNetworkImage(
-      height: 50,
-      width: 50,
-      memCacheHeight: 50,
-      memCacheWidth: 50,
-      placeholder: (context, url) => const CircularProgressIndicator(),
-      imageUrl: imageUrl,
-    ),
-    title: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        name,
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1
-            ?.copyWith(fontWeight: FontWeight.bold),
-      ),
-    ),
-    subtitle: Text(description),
-  );
 }
