@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:person_finder/data.dart';
+import 'package:person_finder/delegates/person_search_delegate.dart';
 import 'package:person_finder/person_card.dart';
 
 void main() {
@@ -55,10 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.headline5,
                 ),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 30),
                 child: CupertinoSearchTextField(
-                  placeholder: 'Search in Air HQ',
+                  onTap: () => showSearch(
+                      context: context, delegate: PersonSearchDelegate()),
                 ),
               ),
               ListView.builder(
