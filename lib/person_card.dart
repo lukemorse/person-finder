@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PersonCard extends StatelessWidget {
@@ -16,14 +15,7 @@ class PersonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CachedNetworkImage(
-        height: 50,
-        width: 50,
-        memCacheHeight: 50,
-        memCacheWidth: 50,
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        imageUrl: imageUrl,
-      ),
+      leading: Image.network(imageUrl),
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Text(
