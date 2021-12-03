@@ -95,8 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     ListView.builder(
-                      // itemCount: testData.length,
-                      itemCount: 10,
+                      itemCount: testData.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) => PersonCard(
                         name: testData[index]['name'].toString(),
